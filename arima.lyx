@@ -1,0 +1,286 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+ARIMA (0,1,1)
+\end_layout
+
+\begin_layout Section
+ARIMA(0,1,1) Model
+\end_layout
+
+\begin_layout Standard
+ARIMA(0,1,1) model with drift is defined by
+\begin_inset Formula 
+\begin{equation}
+X_{t}=X_{t-1}+\epsilon_{t}+\theta\epsilon_{t-1}+\mu\label{eq: arima}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\epsilon_{t}$
+\end_inset
+
+ is WGN, 
+\begin_inset Formula $\epsilon_{t}\sim\mathcal{{N}}(0,\sigma_{\epsilon}^{2})$
+\end_inset
+
+, 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu$
+\end_inset
+
+ are unknown deterministic parameters.
+ Denote with 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ the process obtained by apply first order differencing on 
+\begin_inset Formula $X_{t}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+Z_{t}=X_{t}-X_{t-1}\label{eq: diff}
+\end{equation}
+
+\end_inset
+
+Thus, we obtain from (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq: arima"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) ,(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq: diff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\begin{equation}
+Z_{t}=\epsilon_{t}+\theta\epsilon_{t-1}+\mu.\label{eq:z}
+\end{equation}
+
+\end_inset
+
+We can notice that 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ is a Gaussian random process with
+\begin_inset Formula 
+\begin{equation}
+E[Z_{t}]=\mu,\ \ \ E[(Z_{t}-\mu)^{2}]=(1+\theta^{2})\sigma_{\epsilon}^{2}.\label{eq:moments}
+\end{equation}
+
+\end_inset
+
+The autocorrelation function of 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ is given by
+\begin_inset Formula 
+\begin{equation}
+R(\tau)=\begin{cases}
+(1+\theta^{2})\sigma_{\epsilon}^{2} & \tau=0\\
+\theta\sigma_{\epsilon}^{2} & \tau=1\\
+0 & \tau>=2
+\end{cases}\label{eq:autocorr}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+MLE
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $z_{i},i=1,...,T$
+\end_inset
+
+ be realizations of the random process 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+.
+ The joint PDF of 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ is given by
+\begin_inset Formula 
+\begin{equation}
+p(z_{1},...,z_{T}|\theta,\sigma_{\epsilon},\mu)=\frac{1}{(2\pi)^{T/2}\det(\Omega)^{1/2}}\exp\left[-0.5(\boldsymbol{z}-\boldsymbol{\mu})^{T}\Omega^{-1}(\boldsymbol{z}-\boldsymbol{\mu})\right]\label{eq:pdf}
+\end{equation}
+
+\end_inset
+
+and thus, 
+\begin_inset Formula 
+\begin{equation}
+-\log\mathcal{{L}}(\theta|\boldsymbol{z})=C+0.5\log\det(\Omega)+0.5(\boldsymbol{z}-\boldsymbol{\mu})^{T}\Omega^{-1}(\boldsymbol{z}-\boldsymbol{\mu})
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{z}=[z_{1},z_{2},...,z_{T}],\ \ \ \ \boldsymbol{\mu}=\mathbf{{1}\mu}
+\end{equation}
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{equation}
+\Omega=\sigma_{\epsilon}^{2}\left(\begin{array}{ccccc}
+1+\theta^{2} & \theta & 0 & \cdots & 0\\
+\theta & 1+\theta^{2} & \theta & \cdots & 0\\
+0 & \theta & 1+\theta^{2} & \ddots & \vdots\\
+\vdots & \vdots & \ddots & \ddots & \theta\\
+0 & 0 & \cdots & \theta & 1+\theta^{2}
+\end{array}\right)
+\end{equation}
+
+\end_inset
+
+The ML estimates are given by
+\begin_inset Formula 
+\begin{align}
+\hat{\mu} & =\underset{\mu}{\arg\min}(\boldsymbol{z}-\boldsymbol{\mu})^{T}\Omega^{-1}(\boldsymbol{z}-\boldsymbol{\mu})\\
+\hat{\theta} & =\underset{\theta}{\arg\min}\log\det(\Omega)+(\boldsymbol{z}-\boldsymbol{\mu})^{T}\Omega^{-1}(\boldsymbol{z}-\boldsymbol{\mu})\\
+\hat{\sigma_{\epsilon}} & =\underset{\sigma_{\epsilon}}{\arg\min}\log\det(\Omega)+(\boldsymbol{z}-\boldsymbol{\mu})^{T}\Omega^{-1}(\boldsymbol{z}-\boldsymbol{\mu})
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+ML estimate of the drift constant
+\end_layout
+
+\begin_layout Standard
+The derivative of the expression in (10) is given by
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial\mu}(\boldsymbol{z}-\boldsymbol{\mu})^{T}\Omega^{-1}(\boldsymbol{z}-\boldsymbol{\mu})=-2(\boldsymbol{z}-\boldsymbol{\mu})^{T}\Omega^{-1}{1}
+\]
+
+\end_inset
+
+Thus,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{\mu}=\frac{\boldsymbol{z}^{T}\Omega^{-1}{\boldsymbol{1}}}{{\boldsymbol{1}}^{T}\Omega^{-1}{\boldsymbol{1}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
